@@ -1,0 +1,13 @@
+package ${package_name}.service;
+
+import com.generator.common.base.BaseService;
+import ${package_name}.model.${model};
+import ${package_name}.model.${model}Example;
+
+/**
+* ${model}Service接口
+* Created by pengdh on ${ctime}.
+*/
+public interface ${model}Service extends BaseService<${model}, ${model}Example> {
+
+}
