@@ -112,6 +112,14 @@ public class MybatisGeneratorUtil {
 		String ctime = new SimpleDateFormat("yyyy/M/d").format(new Date());
 		String servicePath = basePath + module + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/service";
 		String serviceImplPath = basePath + module + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/service/impl";
+		File servicedir = new File(servicePath);
+		File serviceImpldir = new File(serviceImplPath);
+		// 删除时先删除 serviceImpl 目录
+		deleteDir(serviceImpldir);
+		deleteDir(servicedir);
+		// 创建时先创建 service 目录
+		mkdirDir(servicedir);
+		mkdirDir(serviceImpldir);
 		for (int i = 0; i < tables.size(); i++) {
 			String model = StringUtil.lineToHump(ObjectUtils.toString(tables.get(i).get("table_name")));
 			String service = servicePath + "/" + model + "Service.java";
@@ -124,7 +132,7 @@ public class MybatisGeneratorUtil {
 				context.put("model", model);
 				context.put("ctime", ctime);
 				VelocityUtil.generate(service_vm, service, context);
-				System.out.println(service);
+				System.out.println("新增 service 文件 " + service);
 			}
 			// 生成serviceImpl
 			File serviceImplFile = new File(serviceImpl);
@@ -135,13 +143,16 @@ public class MybatisGeneratorUtil {
 				context.put("mapper", StringUtil.toLowerCaseFirstOne(model));
 				context.put("ctime", ctime);
 				VelocityUtil.generate(serviceImpl_vm, serviceImpl, context);
-				System.out.println(serviceImpl);
+				System.out.println("新增 serviceImpl 文件 " + serviceImpl);
 			}
 		}
 		System.out.println("========== 结束生成Service ==========");
 	}
 
-	// 递归删除非空文件夹
+	/**
+	 * 递归删除非空文件夹
+	 * @param dir
+	 */
 	public static void deleteDir(File dir) {
 		if (dir.isDirectory()) {
 			File[] files = dir.listFiles();
@@ -149,7 +160,19 @@ public class MybatisGeneratorUtil {
 				deleteDir(files[i]);
 			}
 		}
-		System.out.println("删除非空文件夹" + dir.delete());
+		boolean flag =  dir.delete();
+		System.out.println("删除非空文件夹 " + flag);
+	}
+
+	/**
+	 * 创建文件夹
+	 * @param dir
+	 */
+	public static void mkdirDir(File dir) {
+		if (!dir.exists()) {
+			boolean flag = dir.mkdir();
+			System.out.println("创建文件夹 " + flag);
+		}
 	}
 
 }
