@@ -5,4 +5,4 @@
 ----------
 #### 特别鸣谢
 
-* [<span style="color:blue;font-size:14px;font-family:Microsoft YaHei;font-style:oblique;">https://git.oschina.net/shuzheng</span>](https://git.oschina.net/shuzheng)
+* [<span style="color:blue;font-size:14px;font-family:Microsoft YaHei;font-style:oblique;">https://github.com/shuzheng</span>](https://github.com/shuzheng)
