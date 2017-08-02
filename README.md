@@ -1,2 +1,8 @@
 # mybatis-generator-velocity
 基于 velocity 模板的的mybatis generator 代码生成工具
+
+
+----------
+#### 特别鸣谢
+
+* [<span style="color:blue;font-size:14px;font-family:Microsoft YaHei;font-style:oblique;">https://git.oschina.net/shuzheng</span>](https://git.oschina.net/shuzheng)
