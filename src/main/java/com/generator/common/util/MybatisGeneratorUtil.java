@@ -139,7 +139,6 @@ public class MybatisGeneratorUtil {
 			}
 		}
 		System.out.println("========== 结束生成Service ==========");
-
 	}
 
 	// 递归删除非空文件夹
