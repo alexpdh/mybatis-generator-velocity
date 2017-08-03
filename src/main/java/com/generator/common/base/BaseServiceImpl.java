@@ -114,52 +114,12 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements
 	}
 
 	@Override
-	public List<Record> selectByExampleWithBLOBs(Example example) {
-		try {
-			DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
-			Method selectByExampleWithBLOBs = mapper.getClass()
-					.getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
-			Object result = selectByExampleWithBLOBs.invoke(mapper, example);
-			return (List<Record>) result;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		}
-		DynamicDataSource.clearDataSource();
-		return null;
-	}
-
-	@Override
 	public List<Record> selectByExample(Example example) {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
 			Method selectByExample = mapper.getClass()
 					.getDeclaredMethod("selectByExample", example.getClass());
 			Object result = selectByExample.invoke(mapper, example);
-			return (List<Record>) result;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		}
-		DynamicDataSource.clearDataSource();
-		return null;
-	}
-
-	@Override
-	public List<Record> selectByExampleWithBLOBsForStartPage(Example example, Integer pageNum,
-			Integer pageSize) {
-		try {
-			DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
-			Method selectByExampleWithBLOBs = mapper.getClass()
-					.getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
-			PageHelper.startPage(pageNum, pageSize, false);
-			Object result = selectByExampleWithBLOBs.invoke(mapper, example);
 			return (List<Record>) result;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -181,27 +141,6 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements
 					.getDeclaredMethod("selectByExample", example.getClass());
 			PageHelper.startPage(pageNum, pageSize, false);
 			Object result = selectByExample.invoke(mapper, example);
-			return (List<Record>) result;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		}
-		DynamicDataSource.clearDataSource();
-		return null;
-	}
-
-	@Override
-	public List<Record> selectByExampleWithBLOBsForOffsetPage(Example example, Integer offset,
-			Integer limit) {
-		try {
-			DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
-			Method selectByExampleWithBLOBs = mapper.getClass()
-					.getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
-			PageHelper.offsetPage(offset, limit, false);
-			Object result = selectByExampleWithBLOBs.invoke(mapper, example);
 			return (List<Record>) result;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -256,27 +195,6 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements
 	}
 
 	@Override
-	public Record selectFirstByExampleWithBLOBs(Example example) {
-		try {
-			DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
-			Method selectByExampleWithBLOBs = mapper.getClass()
-					.getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
-			List<Record> result = (List<Record>) selectByExampleWithBLOBs.invoke(mapper, example);
-			if (null != result && result.size() > 0) {
-				return result.get(0);
-			}
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		}
-		DynamicDataSource.clearDataSource();
-		return null;
-	}
-
-	@Override
 	public Record selectByPrimaryKey(Integer id) {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
@@ -316,26 +234,6 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements
 	}
 
 	@Override
-	public int updateByExampleWithBLOBs(@Param("record") Record record,
-			@Param("example") Example example) {
-		try {
-			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
-			Method updateByExampleWithBLOBs = mapper.getClass()
-					.getDeclaredMethod("updateByExampleWithBLOBs", record.getClass(), example.getClass());
-			Object result = updateByExampleWithBLOBs.invoke(mapper, record, example);
-			return Integer.parseInt(String.valueOf(result));
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		}
-		DynamicDataSource.clearDataSource();
-		return 0;
-	}
-
-	@Override
 	public int updateByExample(@Param("record") Record record, @Param("example") Example example) {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
@@ -361,25 +259,6 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements
 			Method updateByPrimaryKeySelective = mapper.getClass()
 					.getDeclaredMethod("updateByPrimaryKeySelective", record.getClass());
 			Object result = updateByPrimaryKeySelective.invoke(mapper, record);
-			return Integer.parseInt(String.valueOf(result));
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		}
-		DynamicDataSource.clearDataSource();
-		return 0;
-	}
-
-	@Override
-	public int updateByPrimaryKeyWithBLOBs(Record record) {
-		try {
-			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
-			Method updateByPrimaryKeyWithBLOBs = mapper.getClass()
-					.getDeclaredMethod("updateByPrimaryKeyWithBLOBs", record.getClass());
-			Object result = updateByPrimaryKeyWithBLOBs.invoke(mapper, record);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
