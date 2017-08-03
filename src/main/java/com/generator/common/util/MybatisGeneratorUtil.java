@@ -174,5 +174,4 @@ public class MybatisGeneratorUtil {
 			System.out.println("创建文件夹 " + flag);
 		}
 	}
-
 }
