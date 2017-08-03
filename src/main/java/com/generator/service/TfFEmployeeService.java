@@ -6,7 +6,7 @@ import com.generator.model.TfFEmployeeExample;
 
 /**
 * TfFEmployeeService接口
-* Created by pengdh on 2017/8/2.
+* Created by pengdh on 2017/8/3.
 */
 public interface TfFEmployeeService extends BaseService<TfFEmployee, TfFEmployeeExample> {
 

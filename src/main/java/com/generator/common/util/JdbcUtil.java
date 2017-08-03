@@ -51,8 +51,8 @@ public class JdbcUtil {
 	}
 
 	// 查询多条记录
-	public List<Map> selectByParams(String sql, List params) throws SQLException {
-		List<Map> list = new ArrayList<Map> ();
+	public List<Map<String, Object>> selectByParams(String sql, List params) throws SQLException {
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>> ();
 		int index = 1;
 		pstmt = conn.prepareStatement(sql);
 		if (null != params && !params.isEmpty()) {

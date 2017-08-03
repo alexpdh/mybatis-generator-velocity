@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.VelocityContext;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
@@ -57,8 +58,19 @@ public class MybatisGeneratorUtil {
 		String basePath = MybatisGeneratorUtil.class.getResource("/").getPath().replace("/target/classes/", "").replace(targetProject, "").replaceFirst("/", "");
 		String generatorConfig_xml = MybatisGeneratorUtil.class.getResource("/").getPath().replace("/target/classes/", "") + "/src/main/resources/generatorConfig.xml";
 		targetProject = basePath + targetProject;
-		String sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + table_prefix + "_%';";
 
+		String servicePath = basePath + module + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/service";
+		String serviceImplPath = basePath + module + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/service/impl";
+		File servicedir = new File(servicePath);
+		File serviceImpldir = new File(serviceImplPath);
+
+		String sql = null;
+		if (StringUtils.equals(jdbc_driver, "com.mysql.jdbc.Driver")) {
+			sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + table_prefix + "_%';";
+		} else {
+			sql = "select table_name from user_tables where lower(table_name) like '" + table_prefix + "_%'";
+		}
+		System.out.println(sql);
 		System.out.println("========== 开始生成generatorConfig.xml文件 ==========");
 		List<Map<String, Object>> tables = new ArrayList<Map<String, Object>>();
 		try {
@@ -67,8 +79,8 @@ public class MybatisGeneratorUtil {
 
 			// 查询定制前缀项目的所有表
 			JdbcUtil jdbcUtil = new JdbcUtil(jdbc_driver, jdbc_url, jdbc_username, jdbc_password);
-			List<Map> result = jdbcUtil.selectByParams(sql, null);
-			for (Map map : result) {
+			List<Map<String, Object>> result = jdbcUtil.selectByParams(sql, null);
+			for (Map<String, Object> map : result) {
 				System.out.println(map.get("TABLE_NAME"));
 				table = new HashMap<String, Object>();
 				table.put("table_name", map.get("TABLE_NAME"));
@@ -90,6 +102,9 @@ public class MybatisGeneratorUtil {
 			deleteDir(new File(targetProject + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/model"));
 			deleteDir(new File(targetProject + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/dao"));
 			deleteDir(new File(targetProject + "/src/main/resources/mapper"));
+			// 删除时先删除 serviceImpl 目录
+			deleteDir(serviceImpldir);
+			deleteDir(servicedir);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,13 +125,6 @@ public class MybatisGeneratorUtil {
 
 		System.out.println("========== 开始生成Service ==========");
 		String ctime = new SimpleDateFormat("yyyy/M/d").format(new Date());
-		String servicePath = basePath + module + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/service";
-		String serviceImplPath = basePath + module + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/service/impl";
-		File servicedir = new File(servicePath);
-		File serviceImpldir = new File(serviceImplPath);
-		// 删除时先删除 serviceImpl 目录
-		deleteDir(serviceImpldir);
-		deleteDir(servicedir);
 		// 创建时先创建 service 目录
 		mkdirDir(servicedir);
 		mkdirDir(serviceImpldir);
