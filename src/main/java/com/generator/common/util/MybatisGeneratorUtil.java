@@ -66,9 +66,9 @@ public class MybatisGeneratorUtil {
 
 		String sql = null;
 		if (StringUtils.equals(jdbc_driver, "com.mysql.jdbc.Driver")) {
-			sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + table_prefix + "_%';";
+			sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + table_prefix + "%';";
 		} else {
-			sql = "select table_name from user_tables where lower(table_name) like '" + table_prefix + "_%'";
+			sql = "select table_name from user_tables where lower(table_name) like '" + table_prefix + "%'";
 		}
 		System.out.println(sql);
 		System.out.println("========== 开始生成generatorConfig.xml文件 ==========");

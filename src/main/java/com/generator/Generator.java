@@ -10,7 +10,15 @@ import java.util.Map;
  */
 public class Generator {
 
-	// 根据命名规范，只修改此常量值即可
+
+	/**
+	 * 根据命名规范，只修改此常量值即可
+	 *
+	 *  MODULE 当项目有多个子模块时可以指定生成到对应的子模块下
+	 *  DATABASE MySQL 会用到，oracle 不需要
+	 *  TABLE_PREFIX 表名前缀
+	 *  PACKAGE_NAME 生成文件的包名
+	*/
 	private static String MODULE = "mybatis-generator-velocity";
 	private static String DATABASE = "test";
 	private static String TABLE_PREFIX = "tf";
